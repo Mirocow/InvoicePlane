@@ -17,7 +17,6 @@ if (!defined('BASEPATH')) {
  */
 class Invoices extends Admin_Controller
 {
-
     /**
      * Invoices constructor.
      */
@@ -62,6 +61,12 @@ class Invoices extends Admin_Controller
         $this->mdl_invoices->paginate(site_url('invoices/status/' . $status), $page);
         $invoices = $this->mdl_invoices->result();
 
+        $total = 0;
+        foreach ($invoices as $invoice){
+            $total += (float) $invoice->invoice_total;
+        }
+
+
         $this->layout->set(
             [
                 'invoices' => $invoices,
@@ -70,6 +75,7 @@ class Invoices extends Admin_Controller
                 'filter_placeholder' => trans('filter_invoices'),
                 'filter_method' => 'filter_invoices',
                 'invoice_statuses' => $this->mdl_invoices->statuses(),
+                'total' => $total,
             ]
         );
 
