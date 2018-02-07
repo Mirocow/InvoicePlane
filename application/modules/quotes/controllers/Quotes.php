@@ -62,6 +62,11 @@ class Quotes extends Admin_Controller
         $this->mdl_quotes->paginate(site_url('quotes/status/' . $status), $page);
         $quotes = $this->mdl_quotes->result();
 
+        $total = 0;
+        foreach ($quotes as $quote){
+            $total += (float) $quote->quote_total;
+        }
+
         $this->layout->set(
             array(
                 'quotes' => $quotes,
@@ -69,7 +74,8 @@ class Quotes extends Admin_Controller
                 'filter_display' => true,
                 'filter_placeholder' => trans('filter_quotes'),
                 'filter_method' => 'filter_quotes',
-                'quote_statuses' => $this->mdl_quotes->statuses()
+                'quote_statuses' => $this->mdl_quotes->statuses(),
+                'total' => $total,
             )
         );
 

@@ -59,15 +59,22 @@ class Invoices extends Admin_Controller
         $this->mdl_invoices->paginate(site_url('invoices/status/' . $status), $page);
         $invoices = $this->mdl_invoices->result();
 
+        $total = 0;
+        foreach ($invoices as $invoice){
+            $total += (float) $invoice->invoice_total;
+        }
+
+
         $this->layout->set(
-            array(
+            [
                 'invoices' => $invoices,
                 'status' => $status,
                 'filter_display' => true,
                 'filter_placeholder' => trans('filter_invoices'),
                 'filter_method' => 'filter_invoices',
-                'invoice_statuses' => $this->mdl_invoices->statuses()
-            )
+                'invoice_statuses' => $this->mdl_invoices->statuses(),
+                'total' => $total,
+            ]
         );
 
         $this->layout->buffer('content', 'invoices/index');

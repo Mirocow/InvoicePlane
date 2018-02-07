@@ -1,6 +1,6 @@
 <div id="headerbar">
 
-    <h1 class="headerbar-title"><?php _trans('quotes'); ?></h1>
+    <h1 class="headerbar-title"><?php _trans('quotes'); ?>: <?php echo format_currency($total);?></h1>
 
     <div class="headerbar-item pull-right">
         <button type="button" class="btn btn-default btn-sm submenu-toggle hidden-lg"
